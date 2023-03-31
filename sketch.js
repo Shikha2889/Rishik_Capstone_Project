@@ -80,186 +80,13 @@ function setup() {
 }
 
 function draw() {
-   // background("yellow")
-    console.log(gameState)
-    
-    if (gameState == "Play") {
-        road.visible = true
-        start.visible = false
-        human.changeAnimation("running", playerImg)
-        human.x = World.mouseX
-        road.velocityY = 7
-        human.visible = true
-        spawnBullets()
-        spawnTech()
-        spawnCoins()
-
-        if (human.isTouching(coinGroup)) {
-            coinSound.play()
-        }
-
-        if (human.isTouching(techGroup)) {
-            techSound.play()
-        }
-
-        
-
-        if (road.y > 868) {
-            road.y = 686
-        }
-
-        
-        milliseconds += 1
-       
-
-        if (milliseconds == 60 ) {
-            milliseconds = 0
-            
-            
-            seconds += 1
-            
-
-        }
    
-        if (seconds == 60 ) {
-            seconds = 0
-            
-            if (seconds == 0) {
-                minutes += 1
-            }
-
-            min1Sound.play() 
-        }
-
-        if (minutes == 60 ) {
-            minutes = 0
-            
-            if (minutes == 0) {
-                hours += 1
-            }
-        
-
-        }
-
-
-        if (bulletGroup.isTouching(human)) {
-            bulletSound.play()
-
-            for (let i = 0; i < bulletGroup.length; i++) {
-                let sprite = bulletGroup.get(i)
-
-                if (sprite.isTouching(human)) {
-                    sprite.velocityY = 0
-                    sprite.destroy()
-                    score -= 1
-                }
-            }
-        }
-
-
-        if (coinGroup.isTouching(human)) {
-
-
-            for (let i = 0; i < coinGroup.length; i++) {
-                let sprite = coinGroup.get(i)
-
-                if (sprite.isTouching(human)) {
-                    sprite.velocityY = 0
-                    sprite.destroy()
-                    amounts += 1
-                }
-            }
-
-        }
-
-
-
-        if (techGroup.isTouching(human)) {
-
-
-            for (let i = 0; i < techGroup.length; i++) {
-                let sprite = techGroup.get(i)
-
-                if (sprite.isTouching(human)) {
-                    sprite.velocityY = 0
-                    sprite.destroy()
-                    equipment += 1
-                }
-            }
-
-        }
-
-        if (score <= 0) {
-            gameState = "Over"
-        }
-
-        
-
-        
-        if (equipment == 5) {
-            equipment = 0
-            amounts += 1
-        }
-
-        if (amounts >= 10) {
-            score += 2
-            amounts = 0
-        }
-
-    }
-
-
-
-
-
-    drawSprites()
-
-    textFont("Monospace")
-    textSize(20)
-    if (gameState == "Over" || gameState == "Play") {
-        fill("white")
-        start.destroy()
-        removeElements()
-        textFont("Monospace")
-        textSize(20)
-        text("Lives: " + score, 20, 20)
-        text("Tech: " + equipment, 20, 40)
-        text("Coins: " + amounts, 20, 60)
-    }
-
-    if (gameState == "Over") {
-        human.visible = false
-        road.velocityY = 0
-        techGroup.destroyEach()
-        coinGroup.destroyEach()
-        bulletGroup.destroyEach()
-
-        fill("yellow")
-        textFont('monospace')
-        textSize(50)
-        text("You have lost! Try Again ", width / 3, height / 2-100)
-        fill("white")
-        textFont("Monospace")
-        textSize(20)
-        text("Lives: " + score, 20, 20)
-        text("Tech: " + equipment, 20, 40)
-        text("Coins: " + amounts, 20, 60)
-        loseSound.play()
-
-        fill("white")
-        text(str(hours) + ":" + str(minutes) + ":" + str(seconds), 20, 100)
-        restart.visible = true
-        
-        if (mousePressedOver(restart) && gameState =='Over') {
-            console.log("game restarted")
-            gameState = "Serve"
-            reset()
-        }
-    }
-
+    console.log(gameState)
 
     if (gameState == "Serve") {
-        road.visible = true;
+        background("yellow")
+  
+        road.visible = false;
         
         fill("Blue")
         textFont("Monospace")
@@ -282,16 +109,166 @@ function draw() {
         text("Lives: " + score, 20, 20)
         text("Tech: " + equipment, 20, 40)
         text("Coins: " + amounts, 20, 60)
-        
-
-
-
-
     }
     textSize(30)
 
     text(str(hours) + ":" + str(minutes) + ":" + str(seconds), 20, 150)
 
+    
+    if (gameState == "Play") {
+        road.visible = true
+        start.visible = false
+        human.changeAnimation("running", playerImg)
+        human.x = World.mouseX
+        road.velocityY = 7
+        human.visible = true
+        spawnBullets()
+        spawnTech()
+        spawnCoins()
+
+        if (human.isTouching(coinGroup)) {
+            coinSound.play()
+        }
+
+        if (human.isTouching(techGroup)) {
+            techSound.play()
+        }
+
+        if (road.y > 868) {
+            road.y = 686
+        }
+        
+        milliseconds += 1
+       
+        if (milliseconds == 60 ) {
+            milliseconds = 0            
+            seconds += 1
+        }
+   
+        if (seconds == 60 ) {
+            seconds = 0            
+            if (seconds == 0) {
+                minutes += 1
+            }
+            min1Sound.play() 
+        }
+
+        if (minutes == 60 ) {
+            minutes = 0            
+            if (minutes == 0) {
+                hours += 1
+            }
+        }
+
+
+        if (bulletGroup.isTouching(human)) {
+            bulletSound.play()
+
+            for (let i = 0; i < bulletGroup.length; i++) {
+                let sprite = bulletGroup.get(i)
+
+                if (sprite.isTouching(human)) {
+                    sprite.velocityY = 0
+                    sprite.destroy()
+                    score -= 1
+                }
+            }
+        }
+
+
+        if (coinGroup.isTouching(human)) {
+            for (let i = 0; i < coinGroup.length; i++) {
+                let sprite = coinGroup.get(i)
+
+                if (sprite.isTouching(human)) {
+                    sprite.velocityY = 0
+                    sprite.destroy()
+                    amounts += 1
+                }
+            }
+
+        }
+
+        if (techGroup.isTouching(human)) {
+            for (let i = 0; i < techGroup.length; i++) {
+                let sprite = techGroup.get(i)
+
+                if (sprite.isTouching(human)) {
+                    sprite.velocityY = 0
+                    sprite.destroy()
+                    equipment += 1
+                }
+            }
+        }
+
+        if (score <= 0) {
+            gameState = "Over"
+        }
+        
+        if (equipment == 5) {
+            equipment = 0
+            amounts += 1
+        }
+
+        if (amounts >= 10) {
+            score += 2
+            amounts = 0
+        }
+
+    }
+
+    drawSprites()
+
+    textFont("Monospace")
+    textSize(20)
+
+    if (gameState == "Over" || gameState == "Play") {
+        fill("white")
+        start.destroy()
+        removeElements()
+        textFont("Monospace")
+        textSize(20)
+        text("Lives: " + score, 20, 20)
+        text("Tech: " + equipment, 20, 40)
+        text("Coins: " + amounts, 20, 60)
+    }
+
+    if (gameState == "Over") {
+        background("red")
+        human.visible = false
+        road.visible = false
+        road.velocityY = 0
+        techGroup.destroyEach()
+        coinGroup.destroyEach()
+        bulletGroup.destroyEach()
+
+        fill("yellow")
+        textFont('monospace')
+        textSize(50)
+        text("You have lost! Try Again ", width / 3, height / 2-100)
+        fill("white")
+        textFont("Monospace")
+        textSize(20)
+        text("Lives: " + score, 20, 20)
+        text("Tech: " + equipment, 20, 40)
+        text("Coins: " + amounts, 20, 60)
+        loseSound.play()
+
+        fill("white")
+        text(str(hours) + ":" + str(minutes) + ":" + str(seconds), 20, 100)
+        restart.visible = true
+        
+        
+        if (mousePressedOver(restart) && gameState =='Over') {
+            console.log("game restarted")
+            gameState = "Serve"
+            reset()
+        }
+        drawSprites()
+    }
+
+
+    
     
     
 }
